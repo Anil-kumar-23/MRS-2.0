@@ -23,9 +23,12 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('userInfo', JSON.stringify(data));
       return { success: true };
     } catch (error) {
-      console.error('Login Error:', error);
+      console.error('Login Error Full:', error);
       const message = error.response?.data?.message || 
-                     (error.request ? 'No response from server. Check your network/VITE_API_URL.' : 'Login failed');
+                     (error.request ? 'Server timed out or network blocked. Is the backend asleep/disconnected?' : String(error));
+      if (typeof message === 'string' && message.includes('next is not a function')) {
+        return { success: false, message: 'Backend Router Error: next is not a function. Wait 3 min for Render to finish deploying.' };
+      }
       return { success: false, message };
     }
   };

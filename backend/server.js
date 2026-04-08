@@ -45,6 +45,15 @@ app.get('/', (req, res) => {
   res.send(`Medicine Reminder API 2.0 is running... DB: ${dbStatus}`);
 });
 
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error("Global Catch ->", err.stack);
+  res.status(500).json({
+    message: err.message || "Internal Server Error",
+    type: "Global Error"
+  });
+});
+
 // Start Scheduler
 try {
   scheduler.init();
