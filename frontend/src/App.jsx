@@ -8,6 +8,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import AddMedicine from './pages/AddMedicine';
 import MedicineList from './pages/MedicineList';
+import Home from './pages/Home';
+import About from './pages/About';
+import Contact from './pages/Contact';
 import NotificationManager from './components/NotificationManager';
 
 const ProtectedRoute = ({ children }) => {
@@ -19,15 +22,18 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col transition-colors duration-200">
+      <div className="min-h-screen flex flex-col transition-colors duration-200 bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200">
         <Navbar />
-        <main className="flex-grow container mx-auto px-4 py-8">
+        <main className="flex-grow w-full flex flex-col">
           <NotificationManager />
           <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             
-            <Route path="/" element={
+            <Route path="/dashboard" element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
