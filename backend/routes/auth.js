@@ -4,7 +4,7 @@ const router = express.Router();
 const User = require('../models/User');
 
 // Register
-router.post('/register', async (req, res) => {
+router.post('/register', async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
     console.log(`[AUTH] -> Register attempt for: ${email}`);
@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res, next) => {
   try {
     const { email, password } = req.body;
     console.log(`[AUTH] -> Login attempt for: ${email}`);
@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || 'your_secret_key', { expiresIn: '1d' });
     res.json({ token, user: { id: user._id, name: user.name, email: user.email } });
   } catch (err) {
-    console.error('[AUTH ERROR] ->', err.message);
+    console.error('[AUTH ERROR] ->', err.stack || err.message);
     res.status(500).json({ message: err.message });
   }
 });

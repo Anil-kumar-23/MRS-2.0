@@ -20,7 +20,7 @@ const Dashboard = () => {
   const todaysMedicines = medicines;
 
   useEffect(() => {
-    if (currentTime.getSeconds() === 0 && todaysMedicines.length > 0) {
+    if (todaysMedicines.length > 0) {
       const hours = String(currentTime.getHours()).padStart(2, '0');
       const minutes = String(currentTime.getMinutes()).padStart(2, '0');
       const timeStr = `${hours}:${minutes}`;

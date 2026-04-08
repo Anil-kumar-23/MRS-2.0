@@ -6,7 +6,7 @@ const { protect } = require('../middleware/authMiddleware');
 // @desc    Subscribe to push notifications
 // @route   POST /api/notifications/subscribe
 // @access  Private
-router.post('/subscribe', protect, async (req, res) => {
+router.post('/subscribe', protect, async (req, res, next) => {
   try {
     const { subscription } = req.body;
     

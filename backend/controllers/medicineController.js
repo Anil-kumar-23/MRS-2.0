@@ -3,7 +3,7 @@ const Medicine = require('../models/Medicine');
 // @desc    Get all medicines for logged in user
 // @route   GET /api/medicines
 // @access  Private
-const getMedicines = async (req, res) => {
+const getMedicines = async (req, res, next) => {
   try {
     const medicines = await Medicine.find({ userId: req.user._id });
     res.json(medicines);
@@ -15,7 +15,7 @@ const getMedicines = async (req, res) => {
 // @desc    Add a new medicine
 // @route   POST /api/medicines
 // @access  Private
-const addMedicine = async (req, res) => {
+const addMedicine = async (req, res, next) => {
   try {
     const { name, dosage, frequency, times } = req.body;
 
@@ -37,7 +37,7 @@ const addMedicine = async (req, res) => {
 // @desc    Delete a medicine
 // @route   DELETE /api/medicines/:id
 // @access  Private
-const deleteMedicine = async (req, res) => {
+const deleteMedicine = async (req, res, next) => {
   try {
     const medicine = await Medicine.findById(req.params.id);
 
@@ -55,7 +55,7 @@ const deleteMedicine = async (req, res) => {
 // @desc    Mark medicine as taken
 // @route   POST /api/medicines/:id/take
 // @access  Private/Public (Public for Service Workers)
-const takeMedicine = async (req, res) => {
+const takeMedicine = async (req, res, next) => {
   try {
     const medicine = await Medicine.findById(req.params.id);
     const { userId } = req.body; // Allow userId from body for SW fallback
